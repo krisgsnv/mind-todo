@@ -1,28 +1,48 @@
 import { RootState } from "@/app/store";
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-
-interface ITask {
-    name: string;
-}
+import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { ITask, TaskFilterType } from "./types";
 
 interface ITasksState {
+    filter: TaskFilterType;
     tasks: ITask[];
 }
 
 const initialState: ITasksState = {
-    tasks: [{ name: "Task1" }]
+    filter: "Все",
+    tasks: [
+        { id: 1, name: "Сделать тестовое задание", completed: true },
+        { id: 2, name: "Попасть в Mindbox", completed: false }
+    ]
 };
 
 export const tasksSlice = createSlice({
     name: "tasks",
     initialState,
     reducers: {
-        addTask: (state, action: PayloadAction<ITask>) => {
-            state.tasks.push(action.payload);
+        addTask: ({ tasks }, action: PayloadAction<Omit<ITask, "id">>) => {
+            tasks.push({ id: tasks.length + 1, ...action.payload });
+        },
+        toggleTaskCompleted: ({ tasks }, action: PayloadAction<ITask["id"]>) => {
+            const id = action.payload;
+            const task = tasks.find((task) => task.id === id);
+
+            if (task) {
+                task.completed = !task.completed;
+            }
+        },
+        setFilter: (state, action: PayloadAction<TaskFilterType>) => {
+            state.filter = action.payload;
         }
     }
 });
 
-export const { addTask } = tasksSlice.actions;
+export const { addTask, toggleTaskCompleted } = tasksSlice.actions;
 
 export const selectTasks = (state: RootState) => state.tasks.tasks;
+export const selectFilter = (state: RootState) => state.tasks.filter;
+export const selectActiveTasks = createSelector([selectTasks], (tasks) =>
+    tasks.filter((task) => !task.completed)
+);
+export const selectCompletedTasks = createSelector([selectTasks], (tasks) =>
+    tasks.filter((task) => task.completed)
+);

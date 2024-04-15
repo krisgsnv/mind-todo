@@ -1,0 +1,7 @@
+.checkbox {
+    width: 100%;
+}
+
+.checkbox_completed {
+    text-decoration: line-through;
+}
