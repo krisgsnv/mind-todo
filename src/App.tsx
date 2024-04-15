@@ -1,59 +1,38 @@
-import { List as AntdList, ListProps, Radio, Space } from "antd";
+import { List, ListProps } from "antd";
 import { selectTasks } from "@/entities/Task/model/tasksSlice";
-import { useAppDispatch, useAppSelector } from "@/shared/hooks";
+import { useAppSelector } from "@/shared/hooks";
 import { AddTask } from "@/features/AddTask";
-import {
-    Task,
-    selectActiveTasks,
-    selectCompletedTasks,
-    selectFilter,
-    tasksSlice,
-    type ITask
-} from "@/entities/Task";
+import { selectActiveTasks, selectCompletedTasks, selectFilter, type ITask } from "@/entities/Task";
+import { Filter } from "@/features/Filter";
+import { ToggleTask } from "@/features/ToggleTask";
 
-const List = ({ tasks }: { tasks: ListProps<ITask>["dataSource"] }) => {
+const TasksList = ({ tasks }: { tasks: ListProps<ITask>["dataSource"] }) => {
     return (
-        <AntdList
+        <List
             bordered
             dataSource={tasks}
-            renderItem={(task) => <Task key={task.id} {...task} />}
+            renderItem={(task) => <ToggleTask key={task.id} {...task} />}
         />
     );
 };
 
-const filterOptions = ["Все", "Завершенные", "Активные"];
-
-export const App = () =>  {
-    const dispatch = useAppDispatch();
-    const { setFilter } = tasksSlice.actions;
+export const App = () => {
     const filter = useAppSelector(selectFilter);
     const allTasks = useAppSelector(selectTasks);
     const completedTasks = useAppSelector(selectCompletedTasks);
     const activeTasks = useAppSelector(selectActiveTasks);
+
     const tasksMap = {
         Все: allTasks,
         Завершенные: completedTasks,
         Активные: activeTasks
     };
+
     return (
         <>
             <AddTask />
-            <Space>
-                <Radio.Group
-                    optionType="button"
-                    value={filter}
-                    onChange={(e) => {
-                        dispatch(setFilter(e.target.value));
-                    }}
-                >
-                    {filterOptions.map((filterValue) => (
-                        <Radio.Button key={filterValue} value={filterValue}>
-                            {filterValue}
-                        </Radio.Button>
-                    ))}
-                </Radio.Group>
-            </Space>
-            <List tasks={tasksMap[filter]} />
+            <Filter />
+            <TasksList tasks={tasksMap[filter]} />
         </>
     );
-}
+};
