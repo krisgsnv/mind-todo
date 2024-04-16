@@ -1,4 +1,4 @@
-import { render, screen } from "@/app/providers/AppProvider";
+import { render, screen } from "@/app/providers/JestProvider";
 import { ToggleTask } from "../ui";
 import userEvent from "@testing-library/user-event";
 

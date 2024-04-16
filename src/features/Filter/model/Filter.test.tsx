@@ -1,4 +1,4 @@
-import { render, screen } from "@/app/providers/AppProvider";
+import { render, screen } from "@/app/providers/JestProvider";
 import { MainPage } from "@/pages/MainPage";
 import userEvent from "@testing-library/user-event";
 

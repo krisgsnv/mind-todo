@@ -1,4 +1,4 @@
-import { render, screen } from "@/app/providers/AppProvider";
+import { render, screen } from "@/app/providers/JestProvider";
 import { AddTask } from "../ui";
 import userEvent from "@testing-library/user-event";
 
