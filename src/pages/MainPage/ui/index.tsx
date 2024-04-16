@@ -1,22 +1,12 @@
-import { List, ListProps } from "antd";
 import { selectTasks } from "@/entities/Task/model/tasksSlice";
 import { useAppSelector } from "@/shared/hooks";
 import { AddTask } from "@/features/AddTask";
-import { selectActiveTasks, selectCompletedTasks, selectFilter, type ITask } from "@/entities/Task";
+import { selectActiveTasks, selectCompletedTasks, selectFilter } from "@/entities/Task";
 import { Filter } from "@/features/Filter";
-import { ToggleTask } from "@/features/ToggleTask";
+import { TasksList } from "./TasksList";
+import { TasksCount } from "./TasksCount";
 
-const TasksList = ({ tasks }: { tasks: ListProps<ITask>["dataSource"] }) => {
-    return (
-        <List
-            bordered
-            dataSource={tasks}
-            renderItem={(task) => <ToggleTask key={task.id} {...task} />}
-        />
-    );
-};
-
-export const App = () => {
+export const MainPage = () => {
     const filter = useAppSelector(selectFilter);
     const allTasks = useAppSelector(selectTasks);
     const completedTasks = useAppSelector(selectCompletedTasks);
@@ -33,6 +23,7 @@ export const App = () => {
             <AddTask />
             <Filter />
             <TasksList tasks={tasksMap[filter]} />
+            <TasksCount count={activeTasks.length} />
         </>
     );
 };

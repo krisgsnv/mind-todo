@@ -1,6 +1,6 @@
 import { Checkbox, List } from "antd";
 import clsx from "clsx";
-import { type ITask, toggleTaskCompleted } from "@/entities/Task";
+import { tasksSlice, type ITask } from "@/entities/Task";
 import { useAppDispatch } from "@/shared/hooks";
 
 import "./styles.css";
@@ -12,6 +12,8 @@ const checkBoxClassName = (completed: ITask["completed"]) => {
 export const ToggleTask = ({ id, name, completed }: ITask) => {
     const dispatch = useAppDispatch();
 
+    const { toggleTaskCompleted } = tasksSlice.actions;
+    
     const handleChange = () => {
         dispatch(toggleTaskCompleted(id));
     };

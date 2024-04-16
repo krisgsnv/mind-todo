@@ -20,7 +20,8 @@ export const tasksSlice = createSlice({
     initialState,
     reducers: {
         addTask: ({ tasks }, action: PayloadAction<Omit<ITask, "id">>) => {
-            tasks.push({ id: tasks.length + 1, ...action.payload });
+            const id = tasks[tasks.length - 1].id + 1;
+            tasks.push({ id, ...action.payload });
         },
         toggleTaskCompleted: ({ tasks }, action: PayloadAction<ITask["id"]>) => {
             const id = action.payload;
@@ -36,10 +37,9 @@ export const tasksSlice = createSlice({
     }
 });
 
-export const { addTask, toggleTaskCompleted } = tasksSlice.actions;
-
 export const selectTasks = (state: RootState) => state.tasks.tasks;
 export const selectFilter = (state: RootState) => state.tasks.filter;
+
 export const selectActiveTasks = createSelector([selectTasks], (tasks) =>
     tasks.filter((task) => !task.completed)
 );
