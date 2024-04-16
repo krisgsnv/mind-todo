@@ -2,7 +2,7 @@ import { render, screen } from "@/app/providers/AppProvider";
 import { AddTask } from "../ui";
 import userEvent from "@testing-library/user-event";
 
-test("displays error message when input is clear", async () => {
+test("Error message appears when input field is empty", async () => {
     render(<AddTask />);
     const input = screen.getByRole("textbox");
     const button = screen.getByRole("button");
@@ -14,7 +14,7 @@ test("displays error message when input is clear", async () => {
     expect(screen.getByText(/заполните поле/i)).toBeInTheDocument();
 });
 
-test("does not display error message when input is filled", async () => {
+test("Error message does not appear when input field is filled", async () => {
     render(<AddTask />);
     const input = screen.getByRole("textbox");
     const button = screen.getByRole("button");

@@ -2,13 +2,12 @@ import { render, screen } from "@/app/providers/AppProvider";
 import { MainPage } from "@/pages/MainPage";
 import userEvent from "@testing-library/user-event";
 
-test("does filter value change", async () => {
+test("Filter selection triggers content change", async () => {
     render(<MainPage />);
-    const filterItem = screen.getByTestId("Активные").closest("label");
-    if (filterItem) {
-        await userEvent.click(filterItem);
+    const filterItem = screen.getByText("Активные");
 
-        expect(screen.getByText(/попасть в mindbox/i)).toBeInTheDocument();
-        expect(screen.queryByText(/сделать тестовое задание/i)).not.toBeInTheDocument();
-    }
+    await userEvent.click(filterItem);
+
+    expect(screen.getByText(/попасть в mindbox/i)).toBeInTheDocument();
+    expect(screen.queryByText(/сделать тестовое задание/i)).not.toBeInTheDocument();
 });
