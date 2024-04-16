@@ -7,6 +7,7 @@
         "^.+\\.(js|jsx)$": "babel-jest"
     },
     "moduleNameMapper": {
-        "@/(.*)": "<rootDir>/src/$1"
+        "@/(.*)": "<rootDir>/src/$1",
+        "\\.(css)$": "<rootDir>/src/shared/__mocks__/styleMock.ts"
     }
 }

@@ -7,9 +7,9 @@ test("displays error message when input is clear", async () => {
     const input = screen.getByRole("textbox");
     const button = screen.getByRole("button");
 
-    input.focus();
+    await userEvent.clear(input);
     await userEvent.keyboard("{enter}");
-    await userEvent.click(button)
+    await userEvent.click(button);
 
     expect(screen.getByText(/заполните поле/i)).toBeInTheDocument();
 });
@@ -21,7 +21,7 @@ test("does not display error message when input is filled", async () => {
 
     await userEvent.type(input, "test");
     await userEvent.keyboard("{enter}");
-    await userEvent.click(button)
+    await userEvent.click(button);
 
     expect(screen.queryByText(/заполните поле/i)).not.toBeInTheDocument();
 });

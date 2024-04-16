@@ -11,16 +11,12 @@ export const Filter = () => {
 
     const handleChange = (e: RadioChangeEvent) => {
         dispatch(setFilter(e.target.value));
-    }
-    
+    };
+
     return (
-        <Radio.Group
-            optionType="button"
-            value={filter}
-            onChange={handleChange}
-        >
+        <Radio.Group optionType="button" value={filter} onChange={handleChange}>
             {filterOptions.map((filterValue) => (
-                <Radio.Button key={filterValue} value={filterValue}>
+                <Radio.Button data-testid={filterValue} key={filterValue} value={filterValue}>
                     {filterValue}
                 </Radio.Button>
             ))}
