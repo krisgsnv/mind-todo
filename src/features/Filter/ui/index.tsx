@@ -16,7 +16,7 @@ export const Filter = () => {
     return (
         <Radio.Group optionType="button" value={filter} onChange={handleChange}>
             {filterOptions.map((filterValue) => (
-                <Radio.Button data-testid={filterValue} key={filterValue} value={filterValue}>
+                <Radio.Button key={filterValue} value={filterValue}>
                     {filterValue}
                 </Radio.Button>
             ))}

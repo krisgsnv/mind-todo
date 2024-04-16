@@ -1,13 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { AppProvider } from "@/app/providers";
-import "./index.css";
-import { MainPage } from "@/pages/MainPage";
+import { App } from "@/app";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <AppProvider>
-            <MainPage />
-        </AppProvider>
+        <App />
     </React.StrictMode>
 );
